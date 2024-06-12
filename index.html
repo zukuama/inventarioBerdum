@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de Inventario</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="text/javascript">
+        async function fetchData() {
+            try {
+                const response = await fetch('https://script.google.com/macros/s/AKfycbwtofg5IZlL4ieoBwo3zTGItvjix09suDBUyECJD1EGnJI8mmS2TPsoiLgGFhKMuNe9pg/exec');
+                const data = await response.json();
+                displayData(data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+
+        function displayData(data) {
+            const controlDeInventario = document.getElementById('control-de-inventario');
+            controlDeInventario.innerHTML = '';
+
+            data.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'card';
+
+                const details = document.createElement('div');
+                details.className = 'card-details';
+
+                const nombreDiv = document.createElement('div');
+                nombreDiv.textContent = `Nombre: ${item.nombre}`;
+
+                const numeroDiv = document.createElement('div');
+                numeroDiv.textContent = `Número: ${item.numero}`;
+
+                const descripcionDiv = document.createElement('div');
+                descripcionDiv.textContent = `Descripción: ${item.descripcion}`;
+
+                details.appendChild(nombreDiv);
+                details.appendChild(numeroDiv);
+                details.appendChild(descripcionDiv);
+                card.appendChild(details);
+                controlDeInventario.appendChild(card);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', fetchData);
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Control de Inventario</h1>
+    </header>
+    <nav class="nav">
+        <div class="search-container">
+            <input type="text" id="search-input" class="nav-input" placeholder="Buscar...">
+            <img src="source/ico/search-icon.png" alt="Buscar" class="search-icon">
+        </div>
+        <button id="add-button" class="nav-button">
+            <img src="source/ico/add-icon.png" alt="Agregar">
+        </button>
+    </nav>
+    <main>
+        <div class="control-de-inventario" id="control-de-inventario"></div>
+    </main>
+    <footer>
+        <h1>Miguel Berdum</h1>
+    </footer>
+    <!-- <script src="search.js"></script> -->
+</body>
+</html>
